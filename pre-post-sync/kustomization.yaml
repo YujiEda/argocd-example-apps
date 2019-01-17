@@ -5,3 +5,5 @@ resources:
 - ../guestbook/guestbook-ui-svc.yaml
 - pre-sync-job.yaml
 - post-sync-job.yaml
+- sync-job.yaml
+- skip-job.yaml
