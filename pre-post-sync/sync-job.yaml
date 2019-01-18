@@ -11,18 +11,7 @@ spec:
       containers:
       - name: sleep
         image: alpine:latest
-        command: ["curl", "--data-binary", "@-", "http://alertmanager.192.168.99.100.nip.io/api/v1/alerts << EOS
-[
-  {
-    "labels": {
-      "alertname": "presto_down",
-      "severity": "major"
-    },
-    "annotations": {
-      "summary": "some presto node is down! now presto has ${presto_nodes} nodes.."
-    }
-  }
-]
-EOS"]
+        command: >
+         curl -H "Content-Type: application/json" -d '[{"labels":{"alertname":"TestAlert2”}}]’ alertmanager.192.168.99.100.nip.io/api/v1/alerts
       restartPolicy: Never
   backoffLimit: 0
