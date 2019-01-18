@@ -11,6 +11,18 @@ spec:
       containers:
       - name: sleep
         image: alpine:latest
-        command: ["sleep", "8"]
+        command: ["curl", "--data-binary", "@-", "http://alertmanager.192.168.99.100.nip.io/api/v1/alerts << EOS
+[
+  {
+    "labels": {
+      "alertname": "presto_down",
+      "severity": "major"
+    },
+    "annotations": {
+      "summary": "some presto node is down! now presto has ${presto_nodes} nodes.."
+    }
+  }
+]
+EOS"]
       restartPolicy: Never
   backoffLimit: 0
