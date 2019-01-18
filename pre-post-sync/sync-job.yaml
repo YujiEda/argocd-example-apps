@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
       - name: curl
-        image: alpine:latest
+        image: quay.io/cybozu/ubuntu-debug:18.04
         command: ["curl","-H","'Content-Type: application/json'","-d","@/tmp/cjson","alertmanager/api/v1/alerts"]
         volumeMounts:
         - name: cjson-volume

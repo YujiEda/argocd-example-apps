@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  test2.json: |
+    [{"labels":{"alertname":"TestAlert14"}}]
+kind: ConfigMap
+metadata:
+  name: cjson
+  namespace: argocd
