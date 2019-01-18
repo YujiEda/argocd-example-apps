@@ -2,6 +2,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: sync1
+  namespace: argocd
   annotations:
     argocd.argoproj.io/hook: Sync
     argocd.argoproj.io/hook-delete-policy: HookSucceeded
@@ -9,9 +10,15 @@ spec:
   template:
     spec:
       containers:
-      - name: sleep
+      - name: curl
         image: alpine:latest
-        command: >
-         curl -H "Content-Type: application/json" -d '[{"labels":{"alertname":"TestAlert2”}}]’ alertmanager.192.168.99.100.nip.io/api/v1/alerts
+        command: ["curl","-H","'Content-Type: application/json'","-d","@/tmp/cjson","alertmanager/api/v1/alerts"]
+        volumeMounts:
+        - name: cjson-volume
+          mountPath: /tmp/cjson
+      volumes:
+        - name: cjson-volume
+          configMap:
+            name: cjson
       restartPolicy: Never
   backoffLimit: 0

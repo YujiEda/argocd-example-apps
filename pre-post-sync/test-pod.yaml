@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sync1
+spec:
+  containers:
+    - name: curl
+      image: alpine:latest
+      command: ["/bin/sh","-c","ls /tmp/cjson"]
+      volumeMounts:
+      - name: cjson-volume
+        mountPath: /tmp/cjson
+  volumes:
+    - name: cjson-volume
+      configMap:
+        name: cjson
+  restartPolicy: Never

@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: sync1
+  annotations:
+    argocd.argoproj.io/hook: Sync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+spec:
+  template:
+    spec:
+      containers:
+      - name: curl
+        image: alpine:latest
+        args:
+        - /bin/sh
+        - -ec
+        - curl -H "Content-Type: application/json" -d '[{"labels":{"alertname":"TestAlert2”}}]’ alertmanager.192.168.99.100.nip.io/api/v1/alerts
+      restartPolicy: Never
+  backoffLimit: 0
