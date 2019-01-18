@@ -12,7 +12,7 @@ spec:
       containers:
       - name: curl
         image: quay.io/cybozu/ubuntu-debug:18.04
-        command: ["curl","-H","'Content-Type: application/json'","-d","@/tmp/cjson","alertmanager/api/v1/alerts"]
+        command: ["curl","-H","'Content-Type: application/json'","-d","@/tmp/cjson/test2.json","alertmanager/api/v1/alerts"]
         volumeMounts:
         - name: cjson-volume
           mountPath: /tmp/cjson
@@ -20,5 +20,8 @@ spec:
         - name: cjson-volume
           configMap:
             name: cjson
+            items:
+            - key: test2.json
+              path: test2.json
       restartPolicy: Never
   backoffLimit: 0
